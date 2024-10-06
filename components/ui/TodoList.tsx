@@ -34,6 +34,12 @@ const TodoList: React.FC<TodoListProps> = ({
       });
   };
 
+  // 아이템 삭제
+  const onDelete = (id: number) => {};
+
+  // 아이템 수정
+  const onUpdate = (id: number) => {};
+
   // tailwind css 사용 min-height 70vh background: #69CFCF
   return (
     <section className="min-h-[70vh] bg-[#69CFCF]">
@@ -85,9 +91,16 @@ const TodoList: React.FC<TodoListProps> = ({
         {/* Todos 리스트 표시 */}
         {todos.length > 0 ? (
           // TODO ITEM
-          <ul>
+          <ul className="flex flex-col gap-6">
             {todos.map((todo) => {
-              return <TodoItem key={todo.id} {...todo} />;
+              return (
+                <TodoItem
+                  key={todo.id}
+                  onDelete={onDelete}
+                  onUpdate={onUpdate}
+                  {...todo}
+                />
+              );
             })}
           </ul>
         ) : (
