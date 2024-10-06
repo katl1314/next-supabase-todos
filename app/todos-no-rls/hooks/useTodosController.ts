@@ -15,7 +15,7 @@ type TodosType = Database["public"]["Tables"]["todos_no_rls"]["Row"];
 // Todos을 가져오거나 생성, 업데이트, 삭제
 const useTodosController = () => {
   // 로딩 상태
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true); // false시 empty표시 후 loading 표시 후 데이터를 그린다.
   // Todos 리스트
   const [todos, setTodos] = useState<TodosType[]>([]);
 
