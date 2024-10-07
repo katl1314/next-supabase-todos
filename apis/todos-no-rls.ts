@@ -39,7 +39,7 @@ export const getTodosBySearch = async (search: string) => {
     .from("todos_no_rls")
     .select("*") // 모든 컬럼 정보를 조회한다.
     .is("deleted_at", null)
-    .like("content", `%${search}%`) // like검색 %search% => 문자열 템플릿 사용하여 like검색 적용
+    .ilike("content", `%${search}%`) // like검색 %search% => 문자열 템플릿 사용하여 like검색 적용 => ilike는 대소문자 미구별
     .order("id", { ascending: false }); // 내림차순 정렬
   return result;
 };

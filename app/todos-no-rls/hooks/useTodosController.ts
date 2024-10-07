@@ -55,8 +55,9 @@ const useTodosController = () => {
 
   // 검색 기능 LIKE
   const onSearchTodos = async (search: string) => {
-    if (!!search === false) return;
-    {
+    if (!!search === false) {
+      await onGetTodos(); // 검색어가 없으면 모든 데이터를 가져온다.
+    } else {
       const { data } = await getTodosBySearch(search); // 조회한 데이터를 setTodos에 전달한다.
       setTodos(data as TodosType[]);
     }

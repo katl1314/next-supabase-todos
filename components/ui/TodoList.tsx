@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { IoShareSocialOutline, IoSearchOutline } from "react-icons/io5"; // 공유 아이콘
 import { useCopyToClipboard } from "usehooks-ts";
 import { Database } from "@/database.types";
@@ -12,14 +12,25 @@ interface TodoListProps {
   ownerUserId?: string;
   loading?: boolean;
   todos: ITodos[];
+  isReadonly?: boolean;
+  onUpdate: (id: number, content: string) => void;
+  onDelete: (id: number) => void;
+  onCreate: () => void;
+  onSearch: (content: string) => void;
 }
 const TodoList: React.FC<TodoListProps> = ({
   sharedUserFullName,
   ownerUserId,
   loading = false,
   todos = [],
+  isReadonly = false,
+  onUpdate,
+  onDelete,
+  onCreate,
+  onSearch,
 }) => {
-  const [copiedText, copy] = useCopyToClipboard();
+  const [copiedText, copy] = useCopyToClipboard(); // 공유 링크 복사
+  const [searchText, setSearchText] = useState(""); // 검색어 상태
   // share 버튼 클릭 시 공유 링크 복사
   const handleShareClick = (event: React.MouseEvent<HTMLDivElement>): void => {
     const sharedLink = `${window.location.origin}/shared/${ownerUserId}`;
@@ -33,12 +44,6 @@ const TodoList: React.FC<TodoListProps> = ({
         console.log(error);
       });
   };
-
-  // 아이템 삭제
-  const onDelete = (id: number) => {};
-
-  // 아이템 수정
-  const onUpdate = (id: number) => {};
 
   // tailwind css 사용 min-height 70vh background: #69CFCF
   return (
@@ -62,30 +67,46 @@ const TodoList: React.FC<TodoListProps> = ({
           )}
         </article>
         {/* Search */}
-        <article className="flex flex-col sm:flex-row gap-4 mt-8 items-center">
-          <div className=" flex flex-1 h-[60px]">
-            {/* flex-1속성은 container에 얼마나 차지할지 비율임. 테두리 색상은 검정색, 테두리는 둥글게, 폰트는 두껍게 */}
-            <input
-              type="text"
-              className="p-4 flex-1 bg-[#e7cb66] border-black rounded-2xl font-bold"
-            />
-            {/* rounded-r-2xl 오른쪽 둥근 모서리 */}
-            <div className="w-[60px] bg-[#000] flex items-center justify-center rounded-r-2xl cursor-pointer">
-              <IoSearchOutline size={40} color="white" />
+        {!isReadonly && (
+          <article className="flex flex-col sm:flex-row gap-4 mt-8 items-center">
+            <div className=" flex flex-1 h-[60px]">
+              {/* flex-1속성은 container에 얼마나 차지할지 비율임. 테두리 색상은 검정색, 테두리는 둥글게, 폰트는 두껍게 */}
+              <input
+                type="text"
+                className="p-4 flex-1 bg-[#e7cb66] border border-black rounded-l-2xl font-bold"
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    // Enter키 입력시 입력한 데이터를 검색한다.
+                    onSearch(searchText);
+                  }
+                }}
+              />
+              {/* rounded-r-2xl 오른쪽 둥근 모서리 */}
+              <div
+                className="w-[60px] bg-[#000] flex items-center justify-center rounded-r-2xl cursor-pointer"
+                onClick={() => onSearch(searchText)}
+              >
+                <IoSearchOutline size={40} color="white" />
+              </div>
             </div>
-          </div>
-          {/* 버튼 생성 */}
-          <div
-            className="
+            {/* 버튼 생성 */}
+            <div
+              className="
             w-[200px]
             h-[60px]
             flex justify-center items-center
             bg-[#7ebb95] border border-black rounded-xl
+            cursor-pointer
           "
-          >
-            New Task
-          </div>
-        </article>
+              onClick={onCreate}
+            >
+              New Task
+            </div>
+          </article>
+        )}
+
         {/* 중간 선 표시 */}
         <div className="h-[2px] my-10 bg-black"></div>
         {/* Todos 리스트 표시 */}
