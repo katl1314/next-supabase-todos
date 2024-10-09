@@ -35,7 +35,7 @@ export const createServerSideClient = async (
 // -RSC
 // 서버에서 사용하는 컴포넌트 => 리액트 서버 컴포넌트
 export const createServerSideClientRSC = async () => {
-  return createServerSideClient(true);
+  return createServerSideClient(true); // serverComponent가 true일 때 호출
 };
 
 // Middleware
@@ -54,6 +54,7 @@ export const createServerSideMiddleware = async (
   return createSupabaseClient<string>(get, set, remove);
 };
 
+// ServerClient를 생성하는 공통 함수
 export const createSupabaseClient = <T>(
   get: (name: string) => CookieValueTypes,
   set: (name: string, value: string, options: CookieOptions) => void,
