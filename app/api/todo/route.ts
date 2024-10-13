@@ -1,10 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createServerSideClient } from "@/lib/server/supabase";
 import { getTodoList } from "@/actions/todos/todos.actions";
 
 // export const GET = async (req: NextRequest, res: NextResponse) => {
 //   const supabase = createServerSideClient();
-//   const { data, error } = await supabase.from("todos_no_rls").select("*");
+//   const { data, error } = await supabase.from("todos_no_rls").is("deleted_at", null).select("*");
 //   // todo 목록 조회
 //   return NextResponse.json({ data, error });
 // };
