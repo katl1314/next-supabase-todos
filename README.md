@@ -22,3 +22,9 @@
   - 브라우저 BOM
   - 컴포넌트에 'use client'추가하면 클라이언트 컴포넌트가됨. => 서버사이드렌더링에서 사용 가능
     - SSR -> CSR
+
+# ISSUE
+
+- Uncaught Error: invariant expected app router to be mounted
+  - https://moon-lilac.tistory.com/156
+  - Root Layout.ts에 html, body가 누락되면 발생함.
