@@ -1,11 +1,11 @@
 import React from "react";
 import ClientComponent from "./ClientComponent";
-import { getTodoList } from "@/actions/todos/todos.actions";
+import { getTodos } from "@/actions/todos/todos.actions";
 
 const page = async () => {
   // console.log("서버 컴포넌트 렌더링");
   // SSR에서 ServerAction 함수 호출
-  const data = await getTodoList();
+  const data = await getTodos();
   console.log(data);
   return (
     <div>

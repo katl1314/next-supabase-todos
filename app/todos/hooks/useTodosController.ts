@@ -7,9 +7,9 @@ import {
   softDeleteTodos,
   getTodosBySearch,
   getTodosById,
-} from "@/apis/todos-no-rls"; // 클라이언트에서 요청한다굿!
+} from "@/actions/todos/todos.actions"; // Server Action을 실행한다.
 
-type TodosType = Database["public"]["Tables"]["todos_no_rls"]["Row"];
+type TodosType = Database["public"]["Tables"]["todos_with_rls"]["Row"];
 
 // 커스텀훅 생성
 // Todos을 가져오거나 생성, 업데이트, 삭제
