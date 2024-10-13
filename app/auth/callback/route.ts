@@ -15,7 +15,7 @@ export const GET = async (request: NextRequest) => {
   console.log("/auth/callback console end");
 
   if (code) {
-    const supabase = await createServerSideClient(); // 서버 클라이언트는 async로 구성됨
+    const supabase = createServerSideClient(); // 서버 클라이언트는 async로 구성됨
     const { error } = await supabase.auth.exchangeCodeForSession(code); // authToken을 교환해주는 함수
 
     if (error) {
