@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import AuthHeader from "@/components/AuthHeader";
-import { createServerSideClient } from "@/lib/server/supabase";
 import { getUserInfo } from "@/actions/user/user.actions";
 
 const inter = Inter({ subsets: ["latin"] });
