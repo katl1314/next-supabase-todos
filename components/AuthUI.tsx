@@ -10,7 +10,7 @@ const AuthUI = () => {
   const supabase = createSupabaseBrowerClient(); // 슈파베이스 사용시 반드시 client필요
   const { mounted } = useHydrate(); // hydration여부 확인
 
-  // 사용자 정보 가져오기 => useCallback을 사용하여 함수 재사용
+  // 사용자 정보 가져오기 => useCallback을 사용하여 함수 재사용 => useCallback 안쓰면 AuthUI가 렌더링되면 함수를 새로 만든다.
   const getUserInfo = useCallback(async () => {
     // db에 접근시 client.from으로 접근했지만, 인증정보는 auth로 접근해.
     const { data, error } = await supabase.auth.getUser();
