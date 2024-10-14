@@ -29,16 +29,15 @@ const TodoList: React.FC<TodoListProps> = ({
   onCreate,
   onSearch,
 }) => {
-  const [copiedText, copy] = useCopyToClipboard(); // 공유 링크 복사
+  const [_, copy] = useCopyToClipboard(); // 공유 링크 복사
   const [searchText, setSearchText] = useState(""); // 검색어 상태
   // share 버튼 클릭 시 공유 링크 복사
   const handleShareClick = (event: React.MouseEvent<HTMLDivElement>): void => {
     const sharedLink = `${window.location.origin}/share/${ownerUserId}`;
     copy(sharedLink)
       .then(() => {
-        // console.log("copied", { text: sharedLink });
         // Toast 띄우기.
-        alert("공유 링크가 복사되었습니다.");
+        alert(`공유 링크가 복사되었습니다.\n${sharedLink}`);
       })
       .catch((error) => {
         console.log(error);
