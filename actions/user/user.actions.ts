@@ -2,7 +2,7 @@
 
 import { createServerSideClient } from "@/lib/server/supabase";
 export const getUserInfo = async () => {
-  const supabase = createServerSideClient();
+  const supabase = createServerSideClient(); // 쿠키를 사용한다.
 
   // getSession을 사용하는것이 더 빠르다 => 메모리에서 가져오기 때문임. 하지만 서버에서 안전하지 않다.
   // getUser는 조회해서 가져오기 때문임. 다만 서버에서 안전하기 때문에 사용하는것이 좋다.

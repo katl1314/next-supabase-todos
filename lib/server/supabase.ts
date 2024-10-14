@@ -1,6 +1,6 @@
 import { type CookieOptions, createServerClient } from "@supabase/ssr";
 import { Database } from "@/database.types";
-import { cookies } from "next/headers";
+import { cookies } from "next/headers"; // 서버 사이드(컴포넌트)에서만 사용가능하다.
 import { type NextRequest, type NextResponse } from "next/server";
 import {
   getCookie,
