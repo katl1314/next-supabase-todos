@@ -21,15 +21,21 @@ const page: React.FC<ISharePageProps> = async ({ params }) => {
   const { user_id } = params; // 동적 라우팅 파라미터
   console.log(user_id);
 
-  const userProfile = await getUserProfile(user_id);
+  const profile = await getUserProfile(user_id);
 
-  if (!userProfile) {
+  if (!profile) {
     // 만약 userProfile이 없으면? 404페이지를 반환
     console.log("Profile 정보가 없습니다.");
     permanentRedirect("/"); // Home으로 영구 리다이렉트
   }
 
-  return <div>share</div>;
+  const fullName = (profile.full_name as string) ?? "";
+
+  return (
+    <div>
+      <TodoContainer sharedUserFullName={fullName} ownerUserId={user_id} />
+    </div>
+  );
 };
 
 export default page;

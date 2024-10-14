@@ -5,9 +5,13 @@ import TodoList from "@/components/ui/TodoList";
 
 interface TodoContainerProps {
   ownerUserId?: string;
+  sharedUserFullName?: string;
 }
 
-const TodoContainer: React.FC<TodoContainerProps> = ({ ownerUserId }) => {
+const TodoContainer: React.FC<TodoContainerProps> = ({
+  ownerUserId,
+  sharedUserFullName,
+}) => {
   // 커스텀 훅 호출
   const {
     loading,
@@ -16,7 +20,7 @@ const TodoContainer: React.FC<TodoContainerProps> = ({ ownerUserId }) => {
     onUpdateTodos,
     onDeleteTodos,
     onSearchTodos,
-  } = useTodosController(); // 실제 Supabase 데이터베이스와 통신
+  } = useTodosController(ownerUserId as string); // 실제 Supabase 데이터베이스와 통신
 
   // Todo 업데이트
   const handleUpdate = (id: number, content: string) => {
@@ -45,7 +49,7 @@ const TodoContainer: React.FC<TodoContainerProps> = ({ ownerUserId }) => {
   return (
     <div>
       <TodoList
-        sharedUserFullName="test"
+        sharedUserFullName={sharedUserFullName}
         ownerUserId={ownerUserId}
         loading={loading}
         todos={todos}

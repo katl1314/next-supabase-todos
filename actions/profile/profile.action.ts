@@ -14,5 +14,5 @@ export const getUserProfile = async (
     .select("*")
     .eq("id", user_id); // profiles의 id가 user_id와 일치하는 데이터를 가져오자.
 
-  return data;
+  return data?.[0];
 };

@@ -78,3 +78,16 @@ export const softDeleteTodos = async (id: number) => {
     .eq("id", id)
     .select();
 };
+
+// id와 user_id가 일치하는 데이터 조회
+export const getTodoByUserId = async (userId: string) => {
+  const supabase = createServerSideClient(); // 사용자 인증정보를 쿠키에서 가지고 있다. => 쿠키를 허용해야함.
+  const { data, error } = await supabase
+    .from("todos_with_rls")
+    .select("*")
+    .is("deleted_at", null) // deleted_at가 null인 놈
+    .eq("user_id", userId) // 테이블의 user_id컬럼이 일치하는 놈
+    .order("id", { ascending: false });
+
+  return data;
+};
