@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Database } from "@/database.types";
 import {
   createTodos,
@@ -19,7 +19,8 @@ const useTodosController = (userId: string) => {
   // Todos 리스트
   const [todos, setTodos] = useState<TodosType[]>([]);
 
-  const onGetTodos = async () => {
+  // 리액트는 컴포넌트가 렌더링될때 함수를 실행하기 때문에 함수는 객체이므로 메모이제이션을 사용해야한다. (재사용)
+  const onGetTodos = useCallback(async () => {
     try {
       setLoading(true);
       const data = await getTodoByUserId(userId);
@@ -30,10 +31,11 @@ const useTodosController = (userId: string) => {
       // 데이터 조회가 끝나는 시점 (무조건 실행)
       setLoading(false);
     }
-  };
+  }, [setLoading, setTodos, userId]);
+
   useEffect(() => {
     onGetTodos();
-  }, []); // 초기 렌더링시 콜백 실행함.
+  }, [onGetTodos]); // 초기 렌더링시 콜백 실행함.
 
   // 비어있는 todo 생성
   const onCreateEmptyTodos = async () => {
