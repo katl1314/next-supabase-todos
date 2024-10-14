@@ -23,7 +23,7 @@ const useTodosController = (userId: string) => {
     try {
       setLoading(true);
       const data = await getTodoByUserId(userId);
-      setTodos((data as TodosType[]) ?? []);
+      setTodos((data.data as TodosType[]) ?? []);
     } catch (err) {
       console.error(err);
     } finally {
