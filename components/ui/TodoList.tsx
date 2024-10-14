@@ -33,7 +33,7 @@ const TodoList: React.FC<TodoListProps> = ({
   const [searchText, setSearchText] = useState(""); // 검색어 상태
   // share 버튼 클릭 시 공유 링크 복사
   const handleShareClick = (event: React.MouseEvent<HTMLDivElement>): void => {
-    const sharedLink = `${window.location.origin}/shared/${ownerUserId}`;
+    const sharedLink = `${window.location.origin}/share/${ownerUserId}`;
     copy(sharedLink)
       .then(() => {
         // console.log("copied", { text: sharedLink });

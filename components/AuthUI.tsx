@@ -44,13 +44,7 @@ const AuthUI = () => {
   return (
     <section className="w-full flex flex-row justify-center p-10">
       <div>{user ? `로그인 됨 ${user?.email}` : "로그아웃됨"}</div>
-      <>
-        {user && (
-          <button className="border border-2" onClick={handleSignOut}>
-            로그아웃
-          </button>
-        )}
-      </>
+      <>{user && <button onClick={handleSignOut}>로그아웃</button>}</>
       <div className="min-w-[500px] ">
         <Auth
           redirectTo={process.env.NEXT_PUBLIC_AUTH_REDIRECT_TO}

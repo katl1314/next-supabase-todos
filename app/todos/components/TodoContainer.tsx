@@ -3,7 +3,11 @@
 import useTodosController from "../hooks/useTodosController";
 import TodoList from "@/components/ui/TodoList";
 
-const TodoContainer = () => {
+interface TodoContainerProps {
+  ownerUserId?: string;
+}
+
+const TodoContainer: React.FC<TodoContainerProps> = ({ ownerUserId }) => {
   // 커스텀 훅 호출
   const {
     loading,
@@ -42,7 +46,7 @@ const TodoContainer = () => {
     <div>
       <TodoList
         sharedUserFullName="test"
-        ownerUserId="123"
+        ownerUserId={ownerUserId}
         loading={loading}
         todos={todos}
         isReadonly={false}
