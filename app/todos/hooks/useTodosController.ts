@@ -7,13 +7,14 @@ import {
   softDeleteTodos,
   getTodosBySearch,
   getTodosById,
+  getTodoByUserId,
 } from "@/actions/todos/todos.actions"; // Server Action을 실행한다.
 
 type TodosType = Database["public"]["Tables"]["todos_with_rls"]["Row"];
 
 // 커스텀훅 생성
 // Todos을 가져오거나 생성, 업데이트, 삭제
-const useTodosController = () => {
+const useTodosController = (userId?: string) => {
   // 로딩 상태
   const [loading, setLoading] = useState(true); // false시 empty표시 후 loading 표시 후 데이터를 그린다.
   // Todos 리스트
@@ -22,7 +23,8 @@ const useTodosController = () => {
   const onGetTodos = async () => {
     try {
       setLoading(true);
-      const { data } = await getTodos();
+      const { data } =
+        !!userId === true ? await getTodoByUserId(userId) : await getTodos();
       setTodos((data as TodosType[]) ?? []);
     } catch (err) {
       console.error(err);

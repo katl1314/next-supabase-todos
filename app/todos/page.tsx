@@ -9,10 +9,11 @@ import { getUserInfo } from "@/actions/user/user.actions";
 const page = async () => {
   // 서버렌더링 장점 : DB직접접근, Data Fetch가능
   const { user, error } = await getUserInfo();
-  console.log(user);
+
+  const fullName = user?.user_metadata.full_name;
   return (
     <div>
-      <TodoContainer ownerUserId={user?.id} />
+      <TodoContainer ownerUserId={user?.id} sharedUserFullName={fullName} />
     </div>
   ); // 5초 후에 실행함.
 };

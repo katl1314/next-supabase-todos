@@ -118,6 +118,7 @@ const TodoList: React.FC<TodoListProps> = ({
                   key={todo.id}
                   onDelete={onDelete}
                   onUpdate={onUpdate}
+                  isReadonly={isReadonly}
                   {...todo}
                 />
               );

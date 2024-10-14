@@ -9,15 +9,14 @@ type ITodos = Database["public"]["Tables"]["todos_no_rls"]["Row"];
 interface ITodoItem extends ITodos {
   onDelete: (id: number) => void;
   onUpdate: (id: number, content: string) => void;
+  isReadonly: boolean;
 }
 
 // React.FC<Type>을 적용하면 함수 인자에 타입을 일일히 적용할 필요가 없다.
 const TodoItem: FC<ITodoItem> = ({
   id,
   content,
-  created_at,
-  deleted_at,
-  updated_at,
+  isReadonly,
   onDelete,
   onUpdate,
 }) => {
@@ -59,13 +58,7 @@ const TodoItem: FC<ITodoItem> = ({
 
   return (
     <li className="min-h-[60px] bg-[#b280d9] border border-black rounded-2xl font-bold group">
-      {/* media query를 통해 device의 너비가 640보다 작으면 flex-row를 사용한다. */}
       <article className="min-h-[60px] p-4 flex flex-col sm:flex-row gap-4">
-        {/* 
-          flex-1 : flex: 1 1 0% 
-          text-[18px] : font-size : 18px;
-          cursor: pointer
-        */}
         {isEdit ? (
           <div className="flex flex-1 text-[18px] cursor-pointer p-2">
             <input type="text" value={userInput} onChange={onUserInputChange} />
@@ -73,44 +66,31 @@ const TodoItem: FC<ITodoItem> = ({
         ) : (
           <div className="flex-1 text-[18px] cursor-pointer">{content}</div>
         )}
-        {/* 
-          width: fit-content : 너비는 하위 요소 너비만큼 차지한다.
-          display: flex
-          self-end : align-self : end 
-          gap: 1rem (root 16px)
-        */}
-        <div className="w-fit hidden group-hover:flex self-end gap-4">
-          {isEdit ? (
-            <div
-              onClick={onFinishEdit}
-              className="w-[45px] h-[45px] flex justify-center items-center bg-[#7ebb95] border border-black rounded-2xl cursor-pointer"
-            >
-              <CiCircleCheck size={30} color="black" />
-            </div>
-          ) : (
-            <>
+        {!isReadonly && (
+          <div className="w-fit hidden group-hover:flex self-end gap-4">
+            {isEdit ? (
+              <div
+                onClick={onFinishEdit}
+                className="w-[45px] h-[45px] flex justify-center items-center bg-[#7ebb95] border border-black rounded-2xl cursor-pointer"
+              >
+                <CiCircleCheck size={30} color="black" />
+              </div>
+            ) : (
               <div
                 onClick={onStartEdit}
                 className="w-[45px] h-[45px] flex justify-center items-center bg-[#7ebb95] border border-black rounded-2xl cursor-pointer"
               >
                 <CiEdit size={30} color="black" />
               </div>
-            </>
-          )}
-          {/* width: 45px, height: 45px
-              display : flex (flex-direction : row)
-              justify-content, items-center
-              background-color: #ec3636
-              border border-color: black
-
-          */}
-          <div
-            onClick={onClickDelete}
-            className="w-[45px] h-[45px] flex justify-center items-center bg-[#ec3636] border border-black rounded-2xl cursor-pointer"
-          >
-            <AiOutlineDelete size={30} color="black" />
+            )}
+            <div
+              onClick={onClickDelete}
+              className="w-[45px] h-[45px] flex justify-center items-center bg-[#ec3636] border border-black rounded-2xl cursor-pointer"
+            >
+              <AiOutlineDelete size={30} color="black" />
+            </div>
           </div>
-        </div>
+        )}
       </article>
     </li>
   );
